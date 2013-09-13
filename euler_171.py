@@ -77,7 +77,7 @@ class Euler171:
         # base case 
         if num==0:
             possible+='0'*(n-iteration)
-            self.count += self.multiplicity(possible, last_square)
+            self.count += 1
             self.sum_psquared += int(possible)
             # only keep last n sum_digits
             self.sum_psquared = self.sum_psquared % 10**(self.sum_digits+1)
@@ -93,19 +93,26 @@ class Euler171:
 
     def count_psquaredigits(self, num):
         for a_square in self.single_digit_squares:
+            self.sum_psquared = 0
             self.sum_psquaredigits(self.sum_digits, num-a_square, self.single_digit_squares, a_square)
+            self.sum_dict[num-a_square] = self.sum_psquared
     
+    def create_count_dict(self):
+        for i in range(self.max_count_int):
+            self.count = 0
+            self.count_psquaredigits(i)
+            print i, self.count
+                    
+            self.count_dict[i] = self.count
+            
+
     def main(self):
+        self.create_count_dict()
         for a_square in self.perf_squares:
             print 'current square', a_square
             for i in range(a_square+1):
-                # create count_dict as necessary
                 if not self.count_dict.has_key(i):
-                    self.count = 0
-                    self.count_psquaredigits(i)
-                    print i, self.count
-
-                    self.count_dict[i] = self.count
+                    continue
 
                 n_repeats = self.count_dict[i]
 
