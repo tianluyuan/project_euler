@@ -15,9 +15,9 @@ import math
 import timeit
 
 class Euler171:
-    def __init__(self, n_digits=19, sum_digits=9):
+    def __init__(self, sum_digits=9):
         # number of digits we're concerned with
-        self.n_digits = n_digits
+        self.n_digits = sum_digits*2+1
         # sum over only the last sum_digits
         self.sum_digits = sum_digits
         # the max that the first 10 digits can add up to
@@ -51,10 +51,22 @@ class Euler171:
 
         return psquare
 
+    def multiplicity(self, possible, last_square):
+        ''' possible is a 9 digit number, last square is the last digit squared to
+        make it a 10 digit number
+        '''
+        mult = 1
+        for digit in possible:
+            if str(int(math.sqrt(last_square))) != digit:
+                mult+=1
+
+        return mult
+
     def sum_psquaredigits(self,
                           n, 
                           num, 
                           psquares, 
+                          last_square=0,
                           iteration=0, 
                           possible=''):
         ''' given a max number of digits n and a number, return list of list of
@@ -65,6 +77,7 @@ class Euler171:
         # base case 
         if num==0:
             possible+='0'*(n-iteration)
+            self.count += self.multiplicity(possible, last_square)
             self.sum_psquared += int(possible)
             # only keep last n sum_digits
             self.sum_psquared = self.sum_psquared % 10**(self.sum_digits+1)
@@ -76,51 +89,26 @@ class Euler171:
         for square in psquares:
             temp = possible
             temp += str(int(math.sqrt(square)))
-            self.sum_psquaredigits(n, num-square, psquares, iteration, temp)
+            self.sum_psquaredigits(n, num-square, psquares, last_square, iteration, temp)
 
-    def count_psquaredigits(self,
-                            n, 
-                            num,
-                            psquares,
-                            iteration=0):
-        ''' given a max number of digits n and a number, return list of list of
-        possible digits that satisfy their sum of squares equaling num
-
-        possible is a list of possible numbers that add up to num
-        '''
-        # base case     
-        if num==0:
-            self.count += 1
-            return
-        elif num < 0 or iteration >= n or num > 81*(n-iteration):
-            return
-
-        iteration+=1
-        for square in psquares:
-            self.count_psquaredigits(n, num-square, psquares, iteration)
-
-    def create_count_dict(self):
-        print self.max_count_int
-        for i in range(self.max_count_int+1):
-            self.count = 0
-            self.count_psquaredigits(self.n_digits-self.sum_digits, i, self.single_digit_squares)
-            print i, self.count
-
-            self.count_dict[i] = self.count
+    def count_psquaredigits(self, num):
+        for a_square in self.single_digit_squares:
+            self.sum_psquaredigits(self.sum_digits, num-a_square, self.single_digit_squares, a_square)
     
     def main(self):
-        self.create_count_dict()
-        print 'created dict'
         for a_square in self.perf_squares:
-            for i in range(a_square):
-                # cannot make a_square if i is too big.  i.e. the max possible sum 
-                # of squares for numbers of the length (n_digits-sum_digits) digits
-                # is 81 * (n_digits-sum_digits).  e.g. if we're tryign to hit
-                # ps = 1600, we cannot have the last nine digits sum to 1.
+            print 'current square', a_square
+            for i in range(a_square+1):
+                # create count_dict as necessary
                 if not self.count_dict.has_key(i):
-                    continue
+                    self.count = 0
+                    self.count_psquaredigits(i)
+                    print i, self.count
+
+                    self.count_dict[i] = self.count
 
                 n_repeats = self.count_dict[i]
+
                 if n_repeats == 0:
                     continue
 
