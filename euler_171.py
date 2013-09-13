@@ -36,9 +36,9 @@ class Euler171:
         # combinations of multiplicities
         self.sum_total = 0
         # keep track of sums already calculated
-        self.sum_dict = {}
+        self.sum_dict = dict.fromkeys(range(81*self.sum_digits+1), 0)
         self.sum_multiplicity = 0
-        self.sum_multiplicity_dict = {}
+        self.sum_multiplicity_dict = dict.fromkeys(range(81*self.sum_digits+1), 0)
 
     def possibleperfectsquares(self, n):
         ''' given n where n is the maximum number of digits, return
@@ -94,18 +94,25 @@ class Euler171:
             temp += str(int(math.sqrt(square)))
             self.sum_psquaredigits(n, num-square, psquares, last_square, iteration, temp)
 
+    def create_sum_dict(self):
+        for i in range(10**self.sum_digits):
+            str_i = str(i)
+
+            sum_of_squares = 0
+            for digit in str_i:
+                sum_of_squares += int(digit)**2
+
+            self.sum_dict[sum_of_squares] += i
+            self.sum_multiplicity_dict[sum_of_squares] +=1
+
     def count_psquaredigits(self, num):
         for a_square in self.single_digit_squares:
-            if not self.sum_dict.has_key(num-a_square):
-                self.sum_psquared = 0
-                self.sum_multiplicity = 0
-                self.sum_psquaredigits(self.sum_digits, num-a_square, self.single_digit_squares, a_square)
-                self.sum_dict[num-a_square] = self.sum_psquared
-                self.sum_multiplicity_dict[num-a_square] = self.sum_multiplicity
-            else:
+            if self.sum_dict.has_key(num-a_square):
                 self.count+=self.sum_multiplicity_dict[num-a_square]
     
     def create_count_dict(self):
+        if self.sum_dict[0] == 0:
+            self.create_sum_dict()
         for i in range(self.max_count_int+1):
             self.count = 0
             self.count_psquaredigits(i)
