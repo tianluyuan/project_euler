@@ -98,7 +98,7 @@ class Euler171:
             self.sum_dict[num-a_square] = self.sum_psquared
     
     def create_count_dict(self):
-        for i in range(self.max_count_int):
+        for i in range(self.max_count_int+1):
             self.count = 0
             self.count_psquaredigits(i)
             print i, self.count
@@ -109,14 +109,13 @@ class Euler171:
     def main(self):
         self.create_count_dict()
         for a_square in self.perf_squares:
-            print 'current square', a_square
-            for i in range(a_square+1):
+            for i in range(a_square):
                 if not self.count_dict.has_key(i):
                     continue
 
-                n_repeats = self.count_dict[i]
+                multiplicity = self.count_dict[i]
 
-                if n_repeats == 0:
+                if multiplicity == 0:
                     continue
 
                 if not self.sum_dict.has_key(a_square-i):
@@ -127,5 +126,7 @@ class Euler171:
                 else:
                     this_sum = self.sum_dict[a_square-i]
 
-                self.sum_total += n_repeats * this_sum
+                self.sum_total += multiplicity * this_sum
                 self.sum_total = self.sum_total % 10**(self.sum_digits)
+
+            print 'current square', a_square, 'sum_total', self.sum_total
