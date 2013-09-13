@@ -64,46 +64,54 @@ class Euler171:
 
     #     return mult
 
-    def sum_psquaredigits(self,
-                          n, 
-                          num, 
-                          psquares, 
-                          last_square=0,
-                          iteration=0, 
-                          possible=''):
-        ''' given a max number of digits n and a number, return list of list of
-        possible digits that satisfy their sum of squares equaling num
+    # def sum_psquaredigits(self,
+    #                       n, 
+    #                       num, 
+    #                       psquares, 
+    #                       last_square=0,
+    #                       iteration=0, 
+    #                       possible=''):
+    #     ''' given a max number of digits n and a number, return list of list of
+    #     possible digits that satisfy their sum of squares equaling num
 
-        possible is a list of possible numbers that add up to num
-        '''
-        # base case 
-        if num==0:
-            possible+='0'*(n-iteration)
-            self.count += 1
-            self.sum_multiplicity += 1
-            self.sum_psquared += int(possible)
-            # only keep last n sum_digits
-            self.sum_psquared = self.sum_psquared % 10**(self.sum_digits+1)
-            return
-        elif num < 0 or iteration >= n or num > 81*(n-iteration):
-            return
+    #     possible is a list of possible numbers that add up to num
+    #     '''
+    #     # base case 
+    #     if num==0:
+    #         possible+='0'*(n-iteration)
+    #         self.count += 1
+    #         self.sum_multiplicity += 1
+    #         self.sum_psquared += int(possible)
+    #         # only keep last n sum_digits
+    #         self.sum_psquared = self.sum_psquared % 10**(self.sum_digits+1)
+    #         return
+    #     elif num < 0 or iteration >= n or num > 81*(n-iteration):
+    #         return
 
-        iteration+=1
-        for square in psquares:
-            temp = possible
-            temp += str(int(math.sqrt(square)))
-            self.sum_psquaredigits(n, num-square, psquares, last_square, iteration, temp)
+    #     iteration+=1
+    #     for square in psquares:
+    #         temp = possible
+    #         temp += str(int(math.sqrt(square)))
+    #         self.sum_psquaredigits(n, num-square, psquares, last_square, iteration, temp)
 
     def create_sum_dict(self):
-        for i in range(10**self.sum_digits):
-            str_i = str(i)
+        split = self.sum_digits/2
+        for j in range(10**split):
+            subrange_min = j * 10**(self.sum_digits-split)
+            subrange_max = (j+1) * 10**(self.sum_digits-split)
+           
+            print 'range', j, 'out of', 10**split
+            print 'subranges', subrange_min, subrange_max
+            for i in range(subrange_min, subrange_max):
+                str_i = str(i)
 
-            sum_of_squares = 0
-            for digit in str_i:
-                sum_of_squares += int(digit)**2
+                sum_of_squares = 0
+                for digit in str_i:
+                    sum_of_squares += int(digit)**2
 
-            self.sum_dict[sum_of_squares] += i
-            self.sum_multiplicity_dict[sum_of_squares] +=1
+                self.sum_dict[sum_of_squares] += i
+                self.sum_dict[sum_of_squares] %= 10**self.sum_digits
+                self.sum_multiplicity_dict[sum_of_squares] +=1
 
     def count_psquaredigits(self, num):
         for a_square in self.single_digit_squares:
@@ -116,7 +124,7 @@ class Euler171:
         for i in range(self.max_count_int+1):
             self.count = 0
             self.count_psquaredigits(i)
-            print i, self.count
+            # print i, self.count
                     
             self.count_dict[i] = self.count
             
@@ -127,19 +135,12 @@ class Euler171:
             for i in range(a_square):
                 if not self.count_dict.has_key(i):
                     continue
-
-                multiplicity = self.count_dict[i]
-
-                if multiplicity == 0:
+                elif not self.sum_dict.has_key(a_square-i):
                     continue
 
-                if not self.sum_dict.has_key(a_square-i):
-                    self.sum_psquared = 0
-                    self.sum_psquaredigits(self.sum_digits, a_square - i, self.single_digit_squares)
-                    self.sum_dict[a_square-i] = self.sum_psquared
-                    this_sum = self.sum_psquared
-                else:
-                    this_sum = self.sum_dict[a_square-i]
+                multiplicity = self.count_dict[i]
+                
+                this_sum = self.sum_dict[a_square-i]
 
                 self.sum_total += multiplicity * this_sum
                 self.sum_total = self.sum_total % 10**(self.sum_digits)
