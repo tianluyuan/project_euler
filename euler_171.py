@@ -37,6 +37,8 @@ class Euler171:
         self.sum_total = 0
         # keep track of sums already calculated
         self.sum_dict = {}
+        self.sum_multiplicity = 0
+        self.sum_multiplicity_dict = {}
 
     def possibleperfectsquares(self, n):
         ''' given n where n is the maximum number of digits, return
@@ -51,16 +53,16 @@ class Euler171:
 
         return psquare
 
-    def multiplicity(self, possible, last_square):
-        ''' possible is a 9 digit number, last square is the last digit squared to
-        make it a 10 digit number
-        '''
-        mult = 1
-        for digit in possible:
-            if str(int(math.sqrt(last_square))) != digit:
-                mult+=1
+    # def multiplicity(self, possible, last_square):
+    #     ''' possible is a 9 digit number, last square is the last digit squared to
+    #     make it a 10 digit number
+    #     '''
+    #     mult = 1
+    #     for digit in possible:
+    #         if str(int(math.sqrt(last_square))) != digit:
+    #             mult+=1
 
-        return mult
+    #     return mult
 
     def sum_psquaredigits(self,
                           n, 
@@ -78,6 +80,7 @@ class Euler171:
         if num==0:
             possible+='0'*(n-iteration)
             self.count += 1
+            self.sum_multiplicity += 1
             self.sum_psquared += int(possible)
             # only keep last n sum_digits
             self.sum_psquared = self.sum_psquared % 10**(self.sum_digits+1)
@@ -93,9 +96,14 @@ class Euler171:
 
     def count_psquaredigits(self, num):
         for a_square in self.single_digit_squares:
-            self.sum_psquared = 0
-            self.sum_psquaredigits(self.sum_digits, num-a_square, self.single_digit_squares, a_square)
-            self.sum_dict[num-a_square] = self.sum_psquared
+            if not self.sum_dict.has_key(num-a_square):
+                self.sum_psquared = 0
+                self.sum_multiplicity = 0
+                self.sum_psquaredigits(self.sum_digits, num-a_square, self.single_digit_squares, a_square)
+                self.sum_dict[num-a_square] = self.sum_psquared
+                self.sum_multiplicity_dict[num-a_square] = self.sum_multiplicity
+            else:
+                self.count+=self.sum_multiplicity_dict[num-a_square]
     
     def create_count_dict(self):
         for i in range(self.max_count_int+1):
