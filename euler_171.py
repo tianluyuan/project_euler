@@ -9,7 +9,13 @@
 # in the first 10 digits, second find the possible 9 digit numbers which
 # when added to a combination of the first 10 digits produces a perfect
 # square.  the total sum is then the multiplicity of that combination 
-# times the sum of the possible 9 digit numbers.
+# times the sum of the possible 9 digit numbers.  
+#
+# It is possible to write an algorithm that efficiently does both parts.  We
+# store the 9-digit sums and their multiplicities in two dictionaries with keys
+# corresponding to the the sum of squares of digits.  The mult-dictionary can then
+# be used to caculate teh 10-digit multiplicities, and the sum-dictionary gives us
+# all 9-digit sums
 import copy
 import math
 import timeit
@@ -37,7 +43,6 @@ class Euler171:
         self.sum_total = 0
         # keep track of sums already calculated
         self.sum_dict = dict.fromkeys(range(81*self.sum_digits+1), 0)
-        self.sum_multiplicity = 0
         self.sum_multiplicity_dict = dict.fromkeys(range(81*self.sum_digits+1), 0)
 
     def possibleperfectsquares(self, n):
@@ -52,47 +57,6 @@ class Euler171:
             curr+=1
 
         return psquare
-
-    # def multiplicity(self, possible, last_square):
-    #     ''' possible is a 9 digit number, last square is the last digit squared to
-    #     make it a 10 digit number
-    #     '''
-    #     mult = 1
-    #     for digit in possible:
-    #         if str(int(math.sqrt(last_square))) != digit:
-    #             mult+=1
-
-    #     return mult
-
-    # def sum_psquaredigits(self,
-    #                       n, 
-    #                       num, 
-    #                       psquares, 
-    #                       last_square=0,
-    #                       iteration=0, 
-    #                       possible=''):
-    #     ''' given a max number of digits n and a number, return list of list of
-    #     possible digits that satisfy their sum of squares equaling num
-
-    #     possible is a list of possible numbers that add up to num
-    #     '''
-    #     # base case 
-    #     if num==0:
-    #         possible+='0'*(n-iteration)
-    #         self.count += 1
-    #         self.sum_multiplicity += 1
-    #         self.sum_psquared += int(possible)
-    #         # only keep last n sum_digits
-    #         self.sum_psquared = self.sum_psquared % 10**(self.sum_digits+1)
-    #         return
-    #     elif num < 0 or iteration >= n or num > 81*(n-iteration):
-    #         return
-
-    #     iteration+=1
-    #     for square in psquares:
-    #         temp = possible
-    #         temp += str(int(math.sqrt(square)))
-    #         self.sum_psquaredigits(n, num-square, psquares, last_square, iteration, temp)
 
     def create_sum_dict(self):
         split = self.sum_digits/2
