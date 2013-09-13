@@ -35,6 +35,8 @@ class Euler171:
         # keep track of the total sum across all different possible
         # combinations of multiplicities
         self.sum_total = 0
+        # keep track of sums already calculated
+        self.sum_dict = {}
 
     def possibleperfectsquares(self, n):
         ''' given n where n is the maximum number of digits, return
@@ -98,14 +100,17 @@ class Euler171:
             self.count_psquaredigits(n, num-square, psquares, iteration)
 
     def create_count_dict(self):
+        print self.max_count_int
         for i in range(self.max_count_int+1):
             self.count = 0
             self.count_psquaredigits(self.n_digits-self.sum_digits, i, self.single_digit_squares)
+            print i, self.count
 
             self.count_dict[i] = self.count
     
     def main(self):
         self.create_count_dict()
+        print 'created dict'
         for a_square in self.perf_squares:
             for i in range(a_square):
                 # cannot make a_square if i is too big.  i.e. the max possible sum 
@@ -116,7 +121,16 @@ class Euler171:
                     continue
 
                 n_repeats = self.count_dict[i]
-                self.sum_psquared = 0
-                self.sum_psquaredigits(self.sum_digits, a_square - i, self.single_digit_squares)
-                self.sum_total += n_repeats * self.sum_psquared
+                if n_repeats == 0:
+                    continue
+
+                if not self.sum_dict.has_key(a_square-i):
+                    self.sum_psquared = 0
+                    self.sum_psquaredigits(self.sum_digits, a_square - i, self.single_digit_squares)
+                    self.sum_dict[a_square-i] = self.sum_psquared
+                    this_sum = self.sum_psquared
+                else:
+                    this_sum = self.sum_dict[a_square-i]
+
+                self.sum_total += n_repeats * this_sum
                 self.sum_total = self.sum_total % 10**(self.sum_digits)
