@@ -16,8 +16,6 @@
 # corresponding to the the sum of squares of digits.  The mult-dictionary can then
 # be used to caculate teh 10-digit multiplicities, and the sum-dictionary gives us
 # all 9-digit sums
-import copy
-import math
 import timeit
 
 class Euler171:
@@ -30,6 +28,12 @@ class Euler171:
         self.max_count_int = 81*(self.n_digits-self.sum_digits)
         # a list of single digit squares [0..81]
         self.single_digit_squares = self.possibleperfectsquares(1)
+        # create lookup dictionary for digit squared
+        # with string keys
+        self.squares_lookup_dict = {}
+        for i in range(10):
+            self.squares_lookup_dict[str(i)] = i**2
+
         # perf_square targets we want to hit
         self.perf_squares = self.possibleperfectsquares(self.n_digits)
         # keep track of the sum of the last 9 digits
@@ -71,7 +75,7 @@ class Euler171:
 
                 sum_of_squares = 0
                 for digit in str_i:
-                    sum_of_squares += int(digit)**2
+                    sum_of_squares += self.squares_lookup_dict[digit]
 
                 self.sum_dict[sum_of_squares] += i
                 self.sum_dict[sum_of_squares] %= 10**self.sum_digits
