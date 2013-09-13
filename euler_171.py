@@ -17,9 +17,9 @@ import timeit
 class Euler171:
     def __init__(self):
         # number of digits we're concerned with
-        self.n_digits = 19
+        self.n_digits = 9
         # sum over only the last sum_digits
-        self.sum_digits = 9
+        self.sum_digits = 4
         # the max that the first 10 digits can add up to
         self.max_count_int = 81*(self.n_digits-self.sum_digits)
         # a list of single digit squares [0..81]
