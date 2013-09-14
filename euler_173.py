@@ -22,3 +22,15 @@ def num_laminae(T=100):
                 num+=1
 
     return num
+
+def num_laminae2(T=100):
+    num = 0
+    
+    # since m>=1, we can set the max for k by solving the equation 
+    # with m=1
+    k_max = int((math.sqrt(T+1)-1)/2)
+    for k in range(1, k_max+1):
+        m_poss = T/(4*k) - k
+        num+=m_poss
+
+    return num
