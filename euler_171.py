@@ -29,10 +29,16 @@ class Euler171:
         # a list of single digit squares [0..81]
         self.single_digit_squares = self.possibleperfectsquares(1)
         # create lookup dictionary for digit squared
-        # with string keys
+        # with strings as keys and dict for keeping trakc of the differences
+        # this will ensure we don't have to loop through every
+        # number, just add from lookup-dict
         self.squares_lookup_dict = {}
         for i in range(10):
             self.squares_lookup_dict[str(i)] = i**2
+        self.squares_diff_dict = {}
+        self.squares_diff_dict['0'] = 0
+        for i in range(1, 10):
+            self.squares_diff_dict[i] = 2*i-1
 
         # perf_square targets we want to hit
         self.perf_squares = self.possibleperfectsquares(self.n_digits)
@@ -70,12 +76,20 @@ class Euler171:
            
             print 'range', j, 'out of', 10**split
             print 'subranges', subrange_min, subrange_max
+            sum_of_squares = 0
             for i in range(subrange_min, subrange_max):
-                str_i = str(i)
+                # need to recalculate the sum of digits squared
+                # every ten increments
+                if i % 10 == 0:                    
+                    iteration = 0
+                    str_i = str(i)
 
-                sum_of_squares = 0
-                for digit in str_i:
-                    sum_of_squares += self.squares_lookup_dict[digit]
+                    sum_of_squares = 0
+                    for digit in str_i:
+                        sum_of_squares += self.squares_lookup_dict[digit]
+                else:
+                    iteration += 1
+                    sum_of_squares += self.squares_diff_dict[iteration]
 
                 self.sum_dict[sum_of_squares] += i
                 self.sum_dict[sum_of_squares] %= 10**self.sum_digits
