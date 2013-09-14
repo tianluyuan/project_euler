@@ -1,27 +1,32 @@
 #!/usr/bin/python
 
 # Project euler #171
-# find sum of all numbers n<10^20 such that the sum of digits squared is a perfect
-# square
+# find last 9 digits of the sum of all numbers 0<n<10^20 such that the 
+# sum of digits squared is a perfect square
 #
 # since we're summing over the last 9 digits, it's fruitful
 # to divide the problem into two parts.  First count the multiplicities
-# in the first 10 digits, second find the possible 9 digit numbers which
-# when added to a combination of the first 10 digits produces a perfect
+# in the first 11 digits, second find the possible 9 digit numbers which
+# when added to a combination of the first 11 digits produces a perfect
 # square.  the total sum is then the multiplicity of that combination 
 # times the sum of the possible 9 digit numbers.  
 #
 # It is possible to write an algorithm that efficiently does both parts.  We
 # store the 9-digit sums and their multiplicities in two dictionaries with keys
 # corresponding to the the sum of squares of digits.  The mult-dictionary can then
-# be used to caculate teh 10-digit multiplicities, and the sum-dictionary gives us
+# be used to caculate teh 11-digit multiplicities, and the sum-dictionary gives us
 # all 9-digit sums
+
+# Currently only implemented to count sum_digits across a total of 2(sum_digits)+2
+# digits.  Runs faster this way
+
+# answer: 142989277
 import timeit
 
 class Euler171:
     def __init__(self, sum_digits=9):
         # number of digits we're concerned with
-        self.n_digits = sum_digits*2+1
+        self.n_digits = 2*sum_digits+2
         # sum over only the last sum_digits
         self.sum_digits = sum_digits
         # the max that the first 10 digits can add up to
@@ -39,6 +44,11 @@ class Euler171:
         self.squares_diff_dict['0'] = 0
         for i in range(1, 10):
             self.squares_diff_dict[i] = 2*i-1
+
+        self.two_digit_squares_dict = dict.fromkeys(range(81*2+1), 0)
+        for i in range(10**2):
+            a_square = self.sum_digits_squared(str(i))
+            self.two_digit_squares_dict[a_square] +=1
 
         # perf_square targets we want to hit
         self.perf_squares = self.possibleperfectsquares(self.n_digits)
@@ -68,6 +78,12 @@ class Euler171:
 
         return psquare
 
+    def sum_digits_squared(self, str_i):
+        sum_of_squares = 0
+        for digit in str_i:
+            sum_of_squares += self.squares_lookup_dict[digit]
+        return sum_of_squares
+
     def create_sum_dict(self):
         split = self.sum_digits/2
         for j in range(10**split):
@@ -84,24 +100,22 @@ class Euler171:
                     iteration = 0
                     str_i = str(i)
 
-                    sum_of_squares = 0
-                    for digit in str_i:
-                        sum_of_squares += self.squares_lookup_dict[digit]
+                    sum_of_squares = self.sum_digits_squared(str_i)
                 else:
                     iteration += 1
                     sum_of_squares += self.squares_diff_dict[iteration]
 
                 self.sum_dict[sum_of_squares] += i
-                self.sum_dict[sum_of_squares] %= 10**self.sum_digits
+                # self.sum_dict[sum_of_squares] %= 10**self.sum_digits
                 self.sum_multiplicity_dict[sum_of_squares] +=1
 
     def count_psquaredigits(self, num):
-        for a_square in self.single_digit_squares:
+        for a_square, multi in self.two_digit_squares_dict.iteritems():
             if num < a_square:
                 # break out of loop if num-a_square < 0
                 break
             if self.sum_multiplicity_dict.has_key(num-a_square):
-                self.count+=self.sum_multiplicity_dict[num-a_square]
+                self.count+=self.sum_multiplicity_dict[num-a_square]*multi
     
     def create_count_dict(self):
         if not self.sum_multiplicity_dict[0]:
@@ -131,6 +145,6 @@ class Euler171:
                 # print 'first sum', i, 'last sum', a_square - i
                 # print 'multiplicity', multiplicity, 'sum', this_sum
                 self.sum_total += (multiplicity * this_sum)
-                self.sum_total %= 10**(self.sum_digits)
+                # self.sum_total %= 10**(self.sum_digits)
 
             print 'current square', a_square, 'sum_total', self.sum_total
