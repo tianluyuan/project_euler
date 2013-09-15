@@ -58,8 +58,31 @@ def num_distinct_laminae(T=100, distinct_laminae_range=range(1,11)):
             if counter==0 or counter > max_N:
                 counter_in_range = False
                 break
-        print counter
         if counter_in_range:
             num_distinct+=1
 
     return num_distinct
+
+def num_distinct_laminae2(T=100, distinct_laminae_range=range(1,11)):
+    tile_dict = {}
+
+    # since m>=1, we can set the max for k by solving the equation 
+    # with m=1
+    k_max = int((math.sqrt(T+1)-1)/2)
+    for k in range(1, k_max+1):
+        m_poss = T/(4*k) - k
+        # calculate tiles
+        for m in range(1, m_poss+1):
+            t = 4*k*(m+k)
+            if tile_dict.has_key(t):
+                tile_dict[t] +=1
+            else:
+                tile_dict[t] =1
+            
+
+    num = 0
+    for n_tiles, n_tiled_laminae in tile_dict.iteritems():
+        if n_tiled_laminae >= distinct_laminae_range[0] and n_tiled_laminae <= distinct_laminae_range[-1]:
+            num+=1
+
+    return num
