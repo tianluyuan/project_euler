@@ -6,6 +6,7 @@
 # Solution is the set of all integer (m,k) such that 4k(m+k)<=T
 
 import math
+import time
 
 # 173
 def num_laminae(T=100):
@@ -64,6 +65,7 @@ def num_distinct_laminae(T=100, distinct_laminae_range=range(1,11)):
     return num_distinct
 
 def num_distinct_laminae2(T=100, distinct_laminae_range=range(1,11)):
+    start = time.clock()
     tile_dict = {}
 
     # since m>=1, we can set the max for k by solving the equation 
@@ -85,4 +87,6 @@ def num_distinct_laminae2(T=100, distinct_laminae_range=range(1,11)):
         if n_tiled_laminae >= distinct_laminae_range[0] and n_tiled_laminae <= distinct_laminae_range[-1]:
             num+=1
 
+    end = time.clock()
+    print 'num_distinct_laminae2(%i) took %f seconds' % (T, end-start)
     return num
