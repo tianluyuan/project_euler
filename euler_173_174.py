@@ -83,8 +83,9 @@ def num_distinct_laminae2(T=100, distinct_laminae_range=range(1,11)):
             
 
     num = 0
-    for n_tiles, n_tiled_laminae in tile_dict.iteritems():
-        if n_tiled_laminae >= distinct_laminae_range[0] and n_tiled_laminae <= distinct_laminae_range[-1]:
+    for n_tiles in tile_dict:
+        if (tile_dict[n_tiles] >= distinct_laminae_range[0] and  
+            tile_dict[n_tiles] <= distinct_laminae_range[-1]):
             num+=1
 
     end = time.clock()
