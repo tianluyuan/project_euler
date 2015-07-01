@@ -45,6 +45,8 @@ def nth_prime_sieve(n=10001):
 def nth_prime(n=10001):
     """ returns the nth prime
     """
+    from math import sqrt
+
     prime_list = [2]
     prime_index = 1
 
@@ -54,10 +56,11 @@ def nth_prime(n=10001):
             if curr_number % prime == 0:
                 curr_number += 2
                 break
+            if prime > sqrt(curr_number):
+                prime_list.append(curr_number)
+                prime_index += 1
+                curr_number += 2
 
-        if prime == prime_list[-1]:
-            prime_list.append(curr_number)
-            prime_index += 1
-            curr_number += 2
+                break
 
     return prime_list[-1]
