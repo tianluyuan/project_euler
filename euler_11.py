@@ -52,40 +52,44 @@ GRID = [[8,2,22,97,38,15,0,40,0,75,4,5,7,78,52,12,50,77,91,8],
 
 
 def group(index_list, n_adj, step):
-    group = []
+    groups = []
     for idx in index_list:
+        group = [idx]
         curr_lev = idx/20
-        for i in range(n_adj):
+        for i in range(1, n_adj):
             next_idx = idx+step*i
             next_lev = next_idx/20
 
+            if i != len(group):
+                break
             if next_idx < 0 or next_idx >= len(GRID)**2:
                 break
-            elif abs(step) == 1 and next_lev != curr_lev:
+            if abs(step) == 1 and next_lev != curr_lev:
                 break
-            elif abs(20-abs(step)) == 1 and abs(next_lev-curr_lev)!=i:
+            if abs(20-abs(step)) == 1 and abs(next_lev-curr_lev)!=i:
                 break
 
             if next_idx in index_list:
                 group.append(next_idx)
-            else:
-                group = []
 
-    return group
+        if len(group) == n_adj:
+            groups.append(group)
+
+    return groups
 
 
 def check_adjacent(index_list, n_adj):
     if len(index_list) < n_adj:
         return
 
-    groups = [group(index_list, n_adj, 1),
-              group(index_list, n_adj, -1),
-              group(index_list, n_adj, 19),
-              group(index_list, n_adj, -19),
-              group(index_list, n_adj, 20),
-              group(index_list, n_adj, -20),
-              group(index_list, n_adj, 21),
-              group(index_list, n_adj, -21)]
+    groups = group(index_list, n_adj, 1)
+    groups.extend(group(index_list, n_adj, -1))
+    groups.extend(group(index_list, n_adj, 19))
+    groups.extend(group(index_list, n_adj, -19))
+    groups.extend(group(index_list, n_adj, 20))
+    groups.extend(group(index_list, n_adj, -20))
+    groups.extend(group(index_list, n_adj, 21))
+    groups.extend(group(index_list, n_adj, -21))
 
     possible_adjacents = [a_group for a_group in groups if len(a_group) == n_adj]
     return possible_adjacents
@@ -105,12 +109,12 @@ def largest_product(n_adj=4):
     for value in sorted(position_dict.keys(), reverse=True):
         max_index_list.extend(position_dict[value])
 
-        adj_indices = check_adjacent(max_index_list, n_adj)
-        if len(adj_indices):
+        adj_groups = check_adjacent(max_index_list, n_adj)
+        if len(adj_groups):
             break
 
     max_prod = 0
-    for adj_group in adj_indices:
+    for adj_group in adj_groups:
         prod = 1
         for idx in adj_group:
             prod*=grid_list[idx]
@@ -118,4 +122,4 @@ def largest_product(n_adj=4):
         if prod > max_prod:
             max_prod = prod
 
-    return max_prod, adj_indices
+    return max_prod, adj_groups
