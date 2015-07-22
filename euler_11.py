@@ -110,7 +110,7 @@ def largest_product(n_adj=4):
         max_index_list.extend(position_dict[value])
 
         adj_groups = check_adjacent(max_index_list, n_adj)
-        if len(adj_groups):
+        if adj_groups:
             break
 
     max_prod = 0
