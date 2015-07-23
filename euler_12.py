@@ -48,4 +48,4 @@ def first_triangle(min_divisors=500):
 
         ndivisors = n_divisors(prime_factors)
 
-    return tri(curr), prime_factors, ndivisors
+    return tri(curr)
