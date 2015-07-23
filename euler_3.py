@@ -15,4 +15,4 @@ def factors(n=600851475143):
         if n%i == 0 and len(factors(i))==1:
             return [i]+factors(n/i)
 
-    return [n]
+    return [n] if n > 1 else []
