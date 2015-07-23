@@ -28,7 +28,7 @@ def n_divisors(prime_factors):
     return ndiv
 
 
-def first_triangle(min_divisors=500):
+def first_triangle_ndivisors_gt(min_divisors=500):
     tri = lambda x: x*(x+1)/2
 
     ndivisors = 1
