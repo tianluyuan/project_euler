@@ -34,7 +34,7 @@ def num_for_longest_chain(maxnum=int(1e6)):
     curr_max = 1
     curr_max_num = 1
 
-    for num in range(1, maxnum):
+    for num in xrange(1, maxnum):
         chain_length = length_collatz_chain(num)
         if chain_length > curr_max:
             curr_max = chain_length
