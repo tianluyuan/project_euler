@@ -20,9 +20,13 @@ def memoize(f):
 
 
 @memoize
-def routes(coords=(0,0), dims=(20,20)):
+def nroutes(coords, dims):
     if any([coord == dim
             for coord, dim in zip(coords, dims)]):
         return 1
 
-    return routes((coords[0], coords[1]+1), dims)+routes((coords[0]+1, coords[1]), dims)
+    return nroutes((coords[0], coords[1]+1), dims)+nroutes((coords[0]+1, coords[1]), dims)
+
+
+def routes(coords=(0,0),dims=(20,20)):
+    return nroutes(coords, dims)
