@@ -41,7 +41,11 @@ TRIPLETS = ['',
             'thousand',
             'million',
             'billion',
-            'trillion']
+            'trillion',
+            'quadrillion',
+            'quintillion',
+            'sextillion',
+            'septillion']
 
 
 def tripled_digits(num):
