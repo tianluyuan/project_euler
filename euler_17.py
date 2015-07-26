@@ -82,8 +82,6 @@ def build_tripled(digits):
         if place == 2:
             if digit != 0:
                 inwords += ONES[digit]+'hundredand'
-            else:
-                inwords += 'and'
         elif place == 1:
             if digit == 1:
                 return inwords+ONES[num % 100]
