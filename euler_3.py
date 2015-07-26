@@ -12,7 +12,7 @@ def factors(n=600851475143):
     """ Returns a list of prime factors of n
     """
     for i in range(2, int(math.sqrt(n))+1):
-        if n%i == 0 and len(factors(i))==1:
+        if n%i == 0:
             return [i]+factors(n/i)
 
     return [n] if n > 1 else []
