@@ -103,7 +103,8 @@ def convert_to_word(num):
     triples = tripled_digits(num)
     inwords = ''
     for idx, triple in enumerate(triples):
-        inwords = build_tripled(triple) + TRIPLETS[idx] + inwords
+        if any(triple):
+            inwords = build_tripled(triple) + TRIPLETS[idx] + inwords
 
     return inwords
 
