@@ -42,8 +42,8 @@ def nth_prime_sieve(n=10001):
     return prime_list[n-1]
 
 
-def nth_prime(n=10001):
-    """ returns the nth prime
+def primes(n):
+    """ returns the first n primes
     """
     from math import sqrt
 
@@ -63,4 +63,10 @@ def nth_prime(n=10001):
 
                 break
 
-    return prime_list[-1]
+    return prime_list
+
+
+def nth_prime(n=10001):
+    """ returns the nth prime
+    """
+    return primes(n)[-1]
