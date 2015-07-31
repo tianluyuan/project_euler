@@ -10,14 +10,13 @@ are 1, 2, 4, 71 and 142; so d(284) = 220.
 Evaluate the sum of all the amicable numbers under 10000.
 """
 from euler_15 import memoize
+from math import sqrt
 
 def divisors(n):
     """ divisors of n
     """
     div = []
-    for i in range(1, n):
-        if div and i >= n/div[-1]:
-            break
+    for i in xrange(1, int(sqrt(n))+1):
         if n%i == 0:
             div.append(n/i)
             if n/i != i:
