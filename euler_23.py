@@ -26,17 +26,20 @@ def get_abundant(upto):
             yield abd
 
 
-def sum_no_two_abd(lower_limit=28123):
+def sum_no_two_abds(lower_limit=28123):
+    """returns sum of all positive integers that cannot be written as sum
+    of two abundant ints
+    """
     two_abd = set([])
 
-    abds = get_abundant(lower_limit)
-    for abd1, abd2 in itertools.product(abds, repeat=2):
-        if abd2 < abd1:
-            continue
-        abdsum = abd1 + abd2
-        if abdsum > lower_limit:
-            continue
-        two_abd.add(abdsum)
+    abds = list(get_abundant(lower_limit))
+    for idx, abd1 in enumerate(abds):
+        for abd2 in abds[idx:]:
+            abdsum = abd1 + abd2
+            if abdsum > lower_limit:
+                # break when above lower_limit because abds sorted
+                break
+            two_abd.add(abdsum)
 
     no_two_abd = set(range(1, lower_limit+1)) - two_abd
     return sum(no_two_abd)
