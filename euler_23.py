@@ -18,7 +18,6 @@ Find the sum of all the positive integers which cannot be written as the
 sum of two abundant numbers.
 """
 import euler_21
-import itertools
 
 def get_abundant(upto):
     for abd in range(upto+1):
