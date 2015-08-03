@@ -40,5 +40,4 @@ def sum_no_two_abds(lower_limit=28123):
                 break
             two_abd.add(abdsum)
 
-    no_two_abd = set(range(1, lower_limit+1)) - two_abd
-    return sum(no_two_abd)
+    return lower_limit*(lower_limit+1)/2 - sum(two_abd)
