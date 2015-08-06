@@ -1,5 +1,5 @@
 """Find the maximum total from top to bottom of the triangle in
-resources/p18.txt and p67.txt
+resources/p18.txt
 """
 from math import sqrt, ceil
 
@@ -44,8 +44,4 @@ def max_possible(filepath):
 
 
 def p18():
-    return max_possible('resources/p18.txt')
-
-
-def p67():
-    return max_possible('resources/p67.txt')
+    return max_possible('resources/p018_triangle.txt')

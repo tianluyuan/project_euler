@@ -20,14 +20,7 @@ The Fibonacci sequence is defined by the recurrence relation:
 
    What is the first term in the Fibonacci sequence to contain 1000 digits?
 """
-from euler_15 import memoize
-
-@memoize
-def fib(n):
-    if n == 1 or n == 2:
-        return 1
-    else:
-        return fib(n-1) + fib(n-2)
+from utils import fib
 
 
 def first_fib_term(ndigits=1000):
