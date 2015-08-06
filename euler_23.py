@@ -17,15 +17,14 @@ two abundant numbers is less than this limit.
 Find the sum of all the positive integers which cannot be written as the
 sum of two abundant numbers.
 """
-import euler_21
-
 def get_abundant(upto):
+    from utils import divisors
     for abd in range(upto+1):
-        if sum(euler_21.divisors(abd))>2*abd:
+        if sum(divisors(abd))>2*abd:
             yield abd
 
 
-def sum_no_two_abds(lower_limit=28123):
+def sum_no_two_abds(lower_limit):
     """returns sum of all positive integers that cannot be written as sum
     of two abundant ints
     """
@@ -41,3 +40,7 @@ def sum_no_two_abds(lower_limit=28123):
             two_abd.add(abdsum)
 
     return lower_limit*(lower_limit+1)/2 - sum(two_abd)
+
+
+def p23():
+    return sum_no_two_abds(28123)

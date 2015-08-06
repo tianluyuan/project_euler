@@ -4,20 +4,7 @@ bottom right corner.
 
 How many such routes are there through a 20x20 grid?
 """
-def memoize(f):
-    """ Memoization decorator for functions taking one or more arguments.
-    http://code.activestate.com/recipes/578231-probably-the-fastest-memoization-decorator-in-the-/
-    """
-    class memodict(dict):
-        def __init__(self, f):
-            self.f = f
-        def __call__(self, *args):
-            return self[args]
-        def __missing__(self, key):
-            ret = self[key] = self.f(*key)
-            return ret
-    return memodict(f)
-
+from utils import memoize
 
 @memoize
 def nroutes(coords, dims):

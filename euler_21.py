@@ -9,19 +9,7 @@ are 1, 2, 4, 71 and 142; so d(284) = 220.
 
 Evaluate the sum of all the amicable numbers under 10000.
 """
-from euler_15 import memoize
-from math import sqrt
-
-def divisors(n):
-    """ divisors of n
-    """
-    div = []
-    for i in xrange(1, int(sqrt(n))+1):
-        if n%i == 0:
-            div.append(n/i)
-            if n/i != i:
-                div.append(i)
-    return div
+from utils import memoize, divisors
 
 
 @memoize
@@ -31,5 +19,10 @@ def d(n):
     return 0 if n<=1 else sum(divisors(n))-n
 
 
-def amicables(upto=10000):
+def amicables(upto):
     return [i for i in range(1, upto) if i == d(d(i)) and i != d(i)]
+
+
+def p21():
+    return sum(amicables(10000))
+
