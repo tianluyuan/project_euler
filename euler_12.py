@@ -1,14 +1,14 @@
 """
 What is the value of the first triangle number to have over five hundred divisors?
 """
-import euler_3
+from utils import pfactors
 from collections import defaultdict
 
 def get_factors_quick(num, cache):
     if cache.has_key(num):
         return cache[num]
     else:
-        factors = euler_3.factors(num)
+        factors = pfactors(num)
         cache[num] = factors
         return factors
 
