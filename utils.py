@@ -29,6 +29,7 @@ def memoize(f):
     return memodict(f)
 
 
+@memoize
 def sieve(upto):
     """ The sieve algorithm to get all primes less than 'upto'
     """
@@ -41,24 +42,26 @@ def sieve(upto):
     return primes + possibles
 
 
-def pfactors(n, primes=None):
-    """ Returns a list of prime factors of n
-    """
-    if primes is None:
-        primes = []
+@memoize
+def pfactors(n):
+    def pfactors_recur(n, primes):
+        """ Returns a list of prime factors of n
+        """
+        for i in xrange(2, int(sqrt(n))+1):
+            if n%i == 0:
+                primes.append(i)
+                return pfactors_recur(n/i, primes)
 
-    for i in xrange(2, int(sqrt(n))+1):
-        if n%i == 0:
-            primes.append(i)
-            return pfactors(n/i, primes)
+        if n > 1:
+            primes.append(n)
+            return primes
+        else:
+            return []
 
-    if n > 1:
-        primes.append(n)
-        return primes
-    else:
-        return []
+    return pfactors_recur(n, [])
 
 
+@memoize
 def divisors(n):
     """ divisors of n, not optimal
     """
