@@ -10,10 +10,11 @@ formed in the same way?
 """
 def spiral_sum(size):
     """ sum = 1 + 4*(1+2*4)-2*6 + 4*(1+2*4+4*4)-4*6 ...
+    reduceable to closed form using partial sums of i and i**2
     """
     if size % 2 != 0:
         n = size/2
-        return 1 + 4*n + sum(map(lambda i: 2*i * (16 * (n - i) + 10), xrange(size/2+1)))
+        return 1 + 4*n + 10*(n**2+n) + 16*(n**3-n)/3
 
 
 def p28():
