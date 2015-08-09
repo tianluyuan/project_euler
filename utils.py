@@ -87,8 +87,8 @@ def sum_digits(num, func=lambda x: x):
     """
     s = 0
     while num:
-        num, rem = divmod(num, 10)
-        s += func(rem)
+        s += func(num % 10)
+        num /= 10
 
     return s
 
