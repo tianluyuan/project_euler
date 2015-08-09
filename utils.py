@@ -80,3 +80,16 @@ def fib(n):
         return 1
     else:
         return fib(n-1) + fib(n-2)
+
+
+def sum_digits(num, func=lambda x: x):
+    """Applies func to each digit in num and returns the sum
+    """
+    s = 0
+    while num:
+        num, rem = divmod(num, 10)
+        s += func(rem)
+
+    return s
+
+
