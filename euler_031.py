@@ -1,6 +1,10 @@
 """
 How many different ways can 200p be made using any number of coins?
 """
+from utils import memoize
+
+
+@memoize
 def count_change(value, allowed_coins):
     """recursively break value into a set of equal or smaller coins
     """
@@ -17,6 +21,6 @@ def count_change(value, allowed_coins):
 
 
 def p31():
-    coins = [200, 100, 50, 20, 10, 5, 2, 1]
+    coins = (200, 100, 50, 20, 10, 5, 2, 1)
     return count_change(200, coins)
 
