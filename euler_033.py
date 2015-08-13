@@ -21,15 +21,12 @@ def cancel(num1, num2):
     num1str = str(num1)
     num2str = str(num2)
     common = set(num1str).intersection(set(num2str))
-    if not common:
+    if not common or '0' in common:
         return 0, 1
 
     num1map = map_occurrences(num1str)
     num2map = map_occurrences(num2str)
     for com in common:
-        if com == '0':
-            return 0, 1
-
         min_occ = min(num1map[com], num2map[com])
         num1str = num1str.replace(com, '', min_occ)
         num2str = num2str.replace(com, '', min_occ)
