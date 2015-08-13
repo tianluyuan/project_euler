@@ -20,19 +20,24 @@ def cancel(num1, num2):
     """
     num1str = str(num1)
     num2str = str(num2)
+    common = set(num1str).intersection(set(num2str))
+    if not common:
+        return 0, 1
+
     num1map = map_occurrences(num1str)
     num2map = map_occurrences(num2str)
-    common = set(num1map).intersection(num2map)
-
     for com in common:
+        if com == '0':
+            return 0, 1
+
         min_occ = min(num1map[com], num2map[com])
         num1str = num1str.replace(com, '', min_occ)
         num2str = num2str.replace(com, '', min_occ)
 
-    if common and num1str and num2str and '0' not in common and '0' != num2str:
+    if num1str and num2str and num2str != '0':
         return int(num1str), int(num2str)
     else:
-        return -1, 1
+        return 0, 1
 
 
 def curious_fractions():
@@ -46,4 +51,4 @@ def curious_fractions():
 
 def p33():
     from operator import mul
-    return reduce(mul, curious_fractions())
+    return reduce(mul, curious_fractions()).denominator
