@@ -2,6 +2,7 @@
 Useful functions
 """
 from math import sqrt
+from collections import defaultdict
 
 
 def hash_answer(answer):
@@ -93,3 +94,12 @@ def sum_digits(num, func=lambda x: x):
     return s
 
 
+def map_occurrences(iterable):
+    """returns a mapping of each item in iterable to the number of its
+    occurences
+    """
+    occmap = defaultdict(int)
+    for i in iterable:
+        occmap[i] += 1
+
+    return occmap
