@@ -7,12 +7,7 @@ factorial of their digits.
 Note: as 1! = 1 and 2! = 2 are not sums they are not included.
 """
 import math
-from utils import memoize, sum_digits
-
-
-@memoize
-def quick_factorial(digit):
-    return math.factorial(digit)
+from utils import sum_digits
 
 
 def curious_numbers():
@@ -22,7 +17,7 @@ def curious_numbers():
     or when n~=7.
     """
     for curr in range(3, 10**6):
-        if curr == sum_digits(curr, quick_factorial):
+        if curr == sum_digits(curr, math.factorial):
             yield curr
 
 
