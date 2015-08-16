@@ -4,11 +4,7 @@ palindrome made from the product of two 2-digit numbers is 9009 = 91 x
 
 Find the largest palindrome made from the product of two 3-digit numbers.
 """
-
-def is_palindrome(num):
-    num_str = str(num)
-    return num_str == num_str[::-1]
-
+from utils import is_palindrome
 
 def largest_palindrome(ndigits=3):
     curr0 = 10**ndigits - 1
