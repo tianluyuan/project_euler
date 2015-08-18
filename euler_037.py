@@ -23,9 +23,9 @@ def truncatable_prime(prime):
 
 
 def truncatable_primes():
-    return islice(ifilter(every_pred(truncatable_prime, check),
+    return islice(ifilter(every_pred(check, truncatable_prime),
                           dropwhile(lambda x: 10 > x, lazy_primes())),
-                          11)
+                  11)
 
 
 def p37():
