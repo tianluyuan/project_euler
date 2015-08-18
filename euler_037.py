@@ -9,17 +9,7 @@ left to right and right to left.
 
 NOTE: 2, 3, 5, and 7 are not considered to be truncatable primes.
 """
-from utils import no_evens, is_prime
-
-
-def truncate(num):
-    """ Yields truncated num from right and left
-    """
-    snum = str(num)
-    yield num
-    for idx in range(len(snum)-1):
-        yield int(snum[:idx+1])
-        yield int(snum[idx+1:])
+from utils import no_evens, is_prime, truncate
 
 
 def truncatable_primes():

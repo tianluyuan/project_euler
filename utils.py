@@ -130,3 +130,14 @@ def rotations(num):
     snum = str(num)
     for idx, sdig in enumerate(snum):
         yield int(snum[idx:] + snum[:idx])
+
+
+def truncate(num):
+    """ Yields truncated num from right and left
+    e.g. 3787->378, 787, 37, 87, 3, 7
+    """
+    snum = str(num)
+    yield num
+    for idx in range(len(snum)-1):
+        yield int(snum[:idx+1])
+        yield int(snum[idx+1:])
