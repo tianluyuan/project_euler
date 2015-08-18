@@ -9,7 +9,7 @@ left to right and right to left.
 
 NOTE: 2, 3, 5, and 7 are not considered to be truncatable primes.
 """
-from utils import no_evens, is_prime, truncate, lazy_primes
+from utils import no_evens, is_prime, truncate, lazy_primes, every_pred
 from itertools import islice, ifilter, dropwhile
 
 
@@ -23,7 +23,10 @@ def truncatable_prime(prime):
 
 
 def truncatable_primes():
-    return islice(ifilter(truncatable_prime,  ifilter(check, dropwhile(lambda x: 10 > x, lazy_primes()))), 11)
+    return islice(ifilter(every_pred(truncatable_prime, check),
+                          dropwhile(lambda x: 10 > x,
+                                    lazy_primes())),
+                  11)
 
 
 def p37():

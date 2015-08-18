@@ -30,6 +30,26 @@ def memoize(f):
     return memodict(f)
 
 
+def every_pred(*fns):
+    """ http://stackoverflow.com/questions/3141958/concise-way-to-call-ifilter-with-multiple-predicates-in-python
+    """
+    def conjoined(x):
+        for fn in fns:
+            if not fn(x): return False
+        return True
+    return conjoined
+
+
+def any_pred(*fns):
+    """ http://stackoverflow.com/questions/3141958/concise-way-to-call-ifilter-with-multiple-predicates-in-python
+    """
+    def disjoined(x):
+        for fn in fns:
+            if fn(x): return True
+        return False
+    return disjoined
+
+
 def lazy_primes():
     """ Get primes indefinitely, suboptimal algo
     """

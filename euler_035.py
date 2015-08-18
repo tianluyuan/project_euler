@@ -10,7 +10,8 @@ How many circular primes are there below one million?
 from utils import (is_prime,
                    no_evens,
                    rotations,
-                   lazy_primes)
+                   lazy_primes,
+                   every_pred)
 from itertools import ifilter, takewhile
 
 
@@ -23,10 +24,9 @@ def no_evens2(num):
 
 
 def circular_primes(upto):
-    return ifilter(is_circular,
-                   ifilter(no_evens2,
-                           takewhile(lambda x: x < upto,
-                                     lazy_primes())))
+    return ifilter(every_pred(no_evens2, is_circular),
+                   takewhile(lambda x: x < upto,
+                             lazy_primes()))
 
 
 def p35():
