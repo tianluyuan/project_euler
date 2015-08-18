@@ -31,22 +31,18 @@ def memoize(f):
 
 
 def every_pred(*fns):
-    """ http://stackoverflow.com/questions/3141958/concise-way-to-call-ifilter-with-multiple-predicates-in-python
+    """ Returns true if all of fns returns true
     """
     def conjoined(x):
-        for fn in fns:
-            if not fn(x): return False
-        return True
+        return all(fn(x) for fn in fns)
     return conjoined
 
 
 def any_pred(*fns):
-    """ http://stackoverflow.com/questions/3141958/concise-way-to-call-ifilter-with-multiple-predicates-in-python
+    """ Returns true if any of fns returns true
     """
     def disjoined(x):
-        for fn in fns:
-            if fn(x): return True
-        return False
+        return any(fn(x) for fn in fns)
     return disjoined
 
 
