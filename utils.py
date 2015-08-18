@@ -30,6 +30,18 @@ def memoize(f):
     return memodict(f)
 
 
+def prime_gen():
+    """ Get primes indefinitely
+    """
+    yield 2
+
+    candidate = 3
+    while True:
+        if len(pfactors(candidate)) == 1:
+            yield candidate
+        candidate += 2
+
+
 @memoize
 def sieve(upto):
     """ The sieve algorithm to get all primes less than 'upto'
@@ -117,11 +129,7 @@ def is_palindrome(num):
 def no_evens(num):
     """ Returns True if num has no even digits
     """
-    for sdigit in str(num):
-        if int(sdigit) % 2 == 0:
-            return False
-
-    return True
+    return all(int(d) % 2 for d in str(num))
 
 
 def rotations(num):
