@@ -25,8 +25,7 @@ def no_evens2(num):
 
 def circular_primes(upto):
     return ifilter(every_pred(no_evens2, is_circular),
-                   takewhile(lambda x: x < upto,
-                             lazy_primes()))
+                   takewhile(lambda x: x < upto, lazy_primes()))
 
 
 def p35():
