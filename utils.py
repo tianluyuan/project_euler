@@ -62,6 +62,10 @@ def pfactors(n):
     return pfactors_recur(n, [])
 
 
+def is_prime(n):
+    return len(pfactors(n)) == 1
+
+
 @memoize
 def divisors(n):
     """ divisors of n, not optimal
@@ -108,3 +112,21 @@ def map_occurrences(iterable):
 def is_palindrome(num):
     num_str = str(num)
     return num_str == num_str[::-1]
+
+
+def no_evens(num):
+    """ Returns True if num has no even digits
+    """
+    for sdigit in str(num):
+        if int(sdigit) % 2 == 0:
+            return False
+
+    return True
+
+
+def rotations(num):
+    """ Yields all rotations of integer num
+    """
+    snum = str(num)
+    for idx, sdig in enumerate(snum):
+        yield int(snum[idx:] + snum[:idx])

@@ -7,25 +7,9 @@ There are thirteen such primes below 100: 2, 3, 5, 7, 11, 13, 17, 31,
 
 How many circular primes are there below one million?
 """
-from utils import pfactors
-
-def no_evens(num):
-    """ Returns True if num has no even digits
-    """
-    for sdigit in str(num):
-        if int(sdigit) % 2 == 0:
-            return False
-
-    return True
-
-
-def rotations(num):
-    """ Yields all rotations of integer num
-    """
-    snum = str(num)
-    for idx, sdig in enumerate(snum):
-        yield int(snum[idx:] + snum[:idx])
-
+from utils import (pfactors,
+                   no_evens,
+                   rotations)
 
 def circular_primes(upto):
     """ Yields all circular primes up to upto
