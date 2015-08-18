@@ -15,7 +15,7 @@ from itertools import islice, ifilter, dropwhile
 
 def check(num):
     snum = str(num)
-    return is_prime(int(snum[0])) and is_prime(int(snum[-1])) and no_evens(snum[1:])
+    return no_evens(snum[1:])
 
 
 def truncatable_prime(prime):
