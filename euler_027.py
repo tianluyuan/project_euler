@@ -3,7 +3,7 @@
    expression that produces the maximum number of primes for consecutive
    values of n, starting with n = 0.
 """
-from utils import pfactors
+from utils import pfactors, is_prime
 
 
 def fns(a, b):
@@ -12,7 +12,7 @@ def fns(a, b):
     func = lambda n: n**2 + a * n + b
 
     n = 0
-    while func(n)>1 and len(pfactors(func(n))) == 1:
+    while func(n)>1 and is_prime(func(n)):
         n += 1
         yield func(n)
 

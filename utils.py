@@ -111,6 +111,19 @@ def divisors(n):
     return div
 
 
+def n_divisors(prime_factors):
+    """use divisor (or tau) function since we have the prime
+    factorization
+    """
+    occurences = map_occurrences(prime_factors)
+
+    ndiv = 1
+    for occ in occurences.itervalues():
+        ndiv *= (occ+1)
+
+    return ndiv
+
+
 @memoize
 def fib(n):
     if n == 1 or n == 2:

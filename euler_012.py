@@ -1,7 +1,7 @@
 """
 What is the value of the first triangle number to have over five hundred divisors?
 """
-from utils import pfactors
+from utils import pfactors, n_divisors
 from collections import defaultdict
 
 def get_factors_quick(num, cache):
@@ -13,22 +13,7 @@ def get_factors_quick(num, cache):
         return factors
 
 
-def n_divisors(prime_factors):
-    """use divisor (or tau) function since we have the prime
-    factorization
-    """
-    occurences = defaultdict(int)
-    for prime in prime_factors:
-        occurences[prime] += 1
-
-    ndiv = 1
-    for occ in occurences.itervalues():
-        ndiv *= (occ+1)
-
-    return ndiv
-
-
-def first_triangle_ndivisors_gt(min_divisors=500):
+def first_triangle_ndivisors_gt(min_divisors):
     tri = lambda x: x*(x+1)/2
 
     ndivisors = 1
@@ -49,3 +34,7 @@ def first_triangle_ndivisors_gt(min_divisors=500):
         ndivisors = n_divisors(prime_factors)
 
     return tri(curr)
+
+
+def p12():
+    return first_triangle_ndivisors_gt(500)
