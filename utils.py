@@ -30,8 +30,8 @@ def memoize(f):
     return memodict(f)
 
 
-def prime_gen():
-    """ Get primes indefinitely
+def lazy_primes():
+    """ Get primes indefinitely, suboptimal algo
     """
     yield 2
 
