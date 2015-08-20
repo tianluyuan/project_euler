@@ -28,30 +28,27 @@ def concatenatable(trial, num, step):
     if step*trial > num:
         return False
 
-    numlen = len(str(num))
+    if step*trial == num and step > 1:
+        return True
+
+    snum = str(num)
+    numlen = len(snum)
     triallen = len(str(step*trial))
     divideby = step*trial * 10**(numlen - triallen)
     (prin, rem) = divmod(num, divideby)
-    if prin == 1 and rem == 0 and step > 1:
-        return True
 
-    if prin != 1 or str(num)[triallen:] != str(rem):
-        return False
-
-    return concatenatable(trial, rem, step+1)
+    if prin == 1 and snum[triallen:] == str(rem):
+        return concatenatable(trial, rem, step+1)
+    else:
+        trial = int(str(trial)+snum[0])
+        num = int(str(trial)+snum[1:])
+        return concatenatable(trial, num, 1)
 
 
 def concatenatable_wrapper(num):
-    idx = 1
     snum = str(num)
     trial = int(snum[0])
-    while trial < num:
-        if concatenatable(trial, num, 1):
-            return True
-        idx += 1
-        trial = int(snum[:idx])
-
-    return False
+    return concatenatable(trial, num, 1)
 
 
 def p39():
