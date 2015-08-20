@@ -1,7 +1,7 @@
 """
 Useful functions
 """
-from math import sqrt
+from math import sqrt, factorial
 from collections import defaultdict
 
 
@@ -156,7 +156,7 @@ def is_palindrome(num):
 
 
 def no_evens(num):
-    """ Returns True if num has no even digits
+    """ Returns True if num has no even perm
     """
     return all(int(d) % 2 for d in str(num))
 
@@ -178,3 +178,26 @@ def truncate(num):
     for idx in range(len(snum)-1):
         yield int(snum[:idx+1])
         yield int(snum[idx+1:])
+
+
+def nth_perm(n, perm, reverse=False):
+    """Returns the nth permutation of perm in lexicographic or reverse
+    lexicographic order
+    """
+    perm.sort(reverse=reverse)
+    if n == 0:
+        return perm
+    ndigs = len(perm)
+    stride = factorial(ndigs-1)
+    step_idx = n/stride
+    perm[0], perm[step_idx] = perm[step_idx], perm[0]
+
+    return [perm[0]] + nth_perm(n - step_idx*stride, perm[1:], reverse)
+
+
+def sorted_perms(perm, reverse=False):
+    """Yields possible permutations of a list perm sorted in
+    lexicographic or reverse order. Lazy eval
+    """
+    for i in xrange(factorial(len(perm))):
+        yield nth_perm(i, perm, reverse)
