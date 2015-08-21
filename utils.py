@@ -30,6 +30,17 @@ def memoize(f):
     return memodict(f)
 
 
+def compose(*fns):
+    """ Compose fns in order
+    """
+    def composed(x):
+        for fn in fns:
+            x = fn(x)
+        return x
+
+    return composed
+
+
 def every_pred(*fns):
     """ Returns true if all of fns returns true
     """
