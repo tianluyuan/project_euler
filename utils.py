@@ -34,8 +34,8 @@ def compose(*fns):
     """ Compose fn with any number of args
     """
     def helper(f, g):
-        def wrapper(*args):
-            return g(f(*args))
+        def wrapper(*args, **kwargs):
+            return g(f(*args, **kwargs))
         return wrapper
     return reduce(helper, fns)
 
@@ -43,16 +43,16 @@ def compose(*fns):
 def every_pred(*fns):
     """ Returns true if all of fns returns true
     """
-    def conjoined(*args):
-        return all(fn(*args) for fn in fns)
+    def conjoined(*args, **kwargs):
+        return all(fn(*args, **kwargs) for fn in fns)
     return conjoined
 
 
 def any_pred(*fns):
     """ Returns true if any of fns returns true
     """
-    def disjoined(*args):
-        return any(fn(*args) for fn in fns)
+    def disjoined(*args, **kwargs):
+        return any(fn(*args, **kwargs) for fn in fns)
     return disjoined
 
 
