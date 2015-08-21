@@ -31,10 +31,14 @@ def memoize(f):
 
 
 def compose(*fns):
-    """ Compose fns in order
+    """ Compose fn with any number of args
     """
-    return reduce(lambda f,g: lambda x : g(f(x)), fns, lambda x: x)
- 
+    def helper(f, g):
+        def wrapper(*args):
+            return g(f(*args))
+        return wrapper
+    return reduce(helper, fns)
+
 
 def every_pred(*fns):
     """ Returns true if all of fns returns true
