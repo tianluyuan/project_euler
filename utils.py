@@ -43,16 +43,16 @@ def compose(*fns):
 def every_pred(*fns):
     """ Returns true if all of fns returns true
     """
-    def conjoined(x):
-        return all(fn(x) for fn in fns)
+    def conjoined(*args):
+        return all(fn(*args) for fn in fns)
     return conjoined
 
 
 def any_pred(*fns):
     """ Returns true if any of fns returns true
     """
-    def disjoined(x):
-        return any(fn(x) for fn in fns)
+    def disjoined(*args):
+        return any(fn(*args) for fn in fns)
     return disjoined
 
 
