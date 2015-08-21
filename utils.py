@@ -33,7 +33,7 @@ def memoize(f):
 def compose(*fns):
     """ Compose fns in order
     """
-    return reduce(lambda f,g: lambda x : g(f(x)), fns)
+    return reduce(lambda f,g: lambda x : g(f(x)), fns, lambda x: x)
  
 
 def every_pred(*fns):
