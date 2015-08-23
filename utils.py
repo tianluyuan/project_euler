@@ -211,3 +211,19 @@ def sorted_perms(perm, reverse=False):
     """
     for i in xrange(factorial(len(perm))):
         yield nth_perm(i, perm, reverse)
+
+
+def load_words(filepath):
+    """ Reads file into list
+    """
+    with open(filepath) as f:
+        all_words = f.read()
+        words = map(lambda word: word.strip('"'), all_words.split(','))
+
+    return words
+
+
+def alpha_value(word):
+    """ returns the alphabetical value for word
+    """
+    return sum(map(lambda ch: ord(ch)-ord('A')+1, word.upper()))

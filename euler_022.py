@@ -10,20 +10,7 @@ list. So, COLIN would obtain a score of 938 x 53 = 49714.
 
 What is the total of all the name scores in the file?
 """
-def load_names(filepath):
-    """ Reads file into list
-    """
-    with open(filepath) as f:
-        all_names = f.read()
-        names = map(lambda name: name.strip('"'), all_names.split(','))
-
-    return names
-
-
-def alpha_value(name):
-    """ returns the alphabetical value for name
-    """
-    return sum(map(lambda ch: ord(ch)-ord('A')+1, name.upper()))
+from utils import load_words, alpha_value
 
 
 def score_name(name, pos):
@@ -31,6 +18,6 @@ def score_name(name, pos):
 
 
 def p22():
-    names = load_names('resources/p022_names.txt')
+    names = load_words('resources/p022_names.txt')
     names.sort()
     return sum([score_name(name, idx+1) for idx, name in enumerate(names)])
