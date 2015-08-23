@@ -14,15 +14,19 @@ Using words.txt (right click and 'Save Link/Target As...'), a 16K text
 file containing nearly two-thousand common English words, how many are
 triangle words?
 """
-from utils import load_words, alpha_value, divisors
+from utils import load_words, alpha_value
+from math import sqrt, floor, ceil
 
 
 def is_triangle(word):
     """A triangle number can be formed if we can factorize
     n**2+n+2*tn. This requires 2*tn to have divisors spaced 1 apart.
     """
-    div = divisors(2*alpha_value(word))
-    return (div[-2] - div[-1]) == 1
+    testval = 2*alpha_value(word)
+    upper = ceil(sqrt(testval))
+    lower = floor(sqrt(testval))
+
+    return upper * lower == testval and upper != lower
 
 
 def p42():
