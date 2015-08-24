@@ -12,10 +12,10 @@ by 11 d7d8d9=728 is divisible by 13 d8d9d10=289 is divisible by 17
 Find the sum of all 0 to 9 pandigital numbers with this property.
 """
 from utils import sorted_perms, lazy_primes
-import itertools
+from itertools import islice, permutations
 
 
-PRIMES = list(itertools.islice(lazy_primes(), 7))
+PRIMES = list(islice(lazy_primes(), 7))
 
 
 def divisible(perms):
@@ -25,4 +25,4 @@ def divisible(perms):
 
 def p43():
     return sum(int(''.join(map(str, perm)))
-               for perm in filter(divisible, sorted_perms(range(10))))
+               for perm in filter(divisible, permutations(range(10))))
