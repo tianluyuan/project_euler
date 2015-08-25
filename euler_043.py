@@ -11,7 +11,7 @@ is divisible by 5 d5d6d7=357 is divisible by 7 d6d7d8=572 is divisible
 by 11 d7d8d9=728 is divisible by 13 d8d9d10=289 is divisible by 17
 Find the sum of all 0 to 9 pandigital numbers with this property.
 """
-from utils import sorted_perms, lazy_primes
+from utils import lazy_primes
 from itertools import islice, permutations
 
 
