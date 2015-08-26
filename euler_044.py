@@ -12,14 +12,7 @@ and difference are pentagonal and D = |Pk - Pj| is minimised; what is
 the value of D?
 """
 from math import sqrt
-
-
-def pentagonal(n):
-    return n*(3*n-1)/2
-
-
-def is_pentagonal(pn):
-    return ((1+sqrt(1+24*pn))/6).is_integer()
+from utils import pentagonal, is_pentagonal
 
 
 def criteria(n,m):

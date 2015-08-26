@@ -227,3 +227,27 @@ def alpha_value(word):
     """ returns the alphabetical value for word
     """
     return sum(map(lambda ch: ord(ch)-ord('A')+1, word.upper()))
+
+
+def triangle(n):
+    return n*(n+1)/2
+
+
+def is_trianglel(tn):
+    return ((-1+sqrt(1+8*tn))/2).is_integer()
+
+
+def pentagonal(n):
+    return n*(3*n-1)/2
+
+
+def is_pentagonal(pn):
+    return ((1+sqrt(1+24*pn))/6).is_integer()
+
+
+def hexagonal(n):
+    return n*(2*n-1)
+
+
+def is_hexagonal(hn):
+    return ((1+sqrt(1+8*hn))/4).is_integer()
