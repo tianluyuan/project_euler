@@ -16,4 +16,4 @@ from itertools import count, islice, ifilter, imap
 
 
 def p45():
-    return islice(ifilter(is_pentagonal, imap(hexagonal, count(144))), 1).next()
+    return ifilter(is_pentagonal, imap(hexagonal, count(144))).next()
