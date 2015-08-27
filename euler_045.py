@@ -10,23 +10,10 @@ It can be verified that T285 = P165 = H143 = 40755.
 
 Find the next triangle number that is also pentagonal and hexagonal.
 """
-from utils import (triangle,
-                   pentagonal,
+from utils import (is_pentagonal,
                    hexagonal)
-
-
-def all_three():
-    n, m, k = 285, 165, 143
-    while True:
-        if triangle(n) == pentagonal(m) == hexagonal(k):
-            yield triangle(n)
-
-        k += 1
-        n += 2
-        while pentagonal(m) < hexagonal(k):
-            m += 1
+from itertools import count, islice, ifilter, imap
 
 
 def p45():
-    from itertools import islice
-    return list(islice(all_three(), 2))[-1]
+    return islice(ifilter(is_pentagonal, imap(hexagonal, count(144))), 1).next()
