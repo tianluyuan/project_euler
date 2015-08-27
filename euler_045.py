@@ -12,7 +12,7 @@ Find the next triangle number that is also pentagonal and hexagonal.
 """
 from utils import (is_pentagonal,
                    hexagonal)
-from itertools import count, islice, ifilter, imap
+from itertools import count, ifilter, imap
 
 
 def p45():
