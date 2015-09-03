@@ -218,7 +218,7 @@ def load_words(filepath):
     """
     with open(filepath) as f:
         all_words = f.read()
-        words = map(lambda word: word.strip('"'), all_words.split(','))
+        words = [word.strip('"') for word in all_words.split(',')]
 
     return words
 
@@ -226,7 +226,7 @@ def load_words(filepath):
 def alpha_value(word):
     """ returns the alphabetical value for word
     """
-    return sum(map(lambda ch: ord(ch)-ord('A')+1, word.upper()))
+    return sum((ord(ch)-ord('A')+1 for ch in word.upper()))
 
 
 def triangle(n):
