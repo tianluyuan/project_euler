@@ -27,4 +27,3 @@ def p47(nconsec=4, start=647):
         if len(filtered) == nconsec:
             return filtered[0]
         start += 1
-
